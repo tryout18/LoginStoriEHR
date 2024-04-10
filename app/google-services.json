@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "971307739250",
+    "project_id": "odn-80f97",
+    "storage_bucket": "odn-80f97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971307739250:android:21c50a8b7e703416773aeb",
+        "android_client_info": {
+          "package_name": "com.edgarhrdevs.loginstoriehr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlrduEsb-BzWELJ5MvlhmoL92qZ8GI2B8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971307739250:android:e806845dbe29e9b2773aeb",
+        "android_client_info": {
+          "package_name": "com.example.gestioncomedorqr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlrduEsb-BzWELJ5MvlhmoL92qZ8GI2B8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971307739250:android:4202c25424d8f4de773aeb",
+        "android_client_info": {
+          "package_name": "com.operacionesdelnorte.atservice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlrduEsb-BzWELJ5MvlhmoL92qZ8GI2B8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
