@@ -1,6 +1,6 @@
 # Instrucciones para acceder a la cuenta con datos
 
-Este repositorio contiene información relevante sobre [tu proyecto/nombre del proyecto]. Si deseas acceder a una cuenta con datos para propósitos de prueba o demostración, sigue las instrucciones a continuación:
+Este repositorio contiene información relevante sobre los requisitos del proyecto. Si deseas acceder a una cuenta con datos para propósitos de prueba o demostración, sigue las instrucciones a continuación:
 
 ## Cuenta de Acceso
 
