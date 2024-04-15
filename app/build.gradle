@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.googleServices)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
     alias(libs.plugins.daggerHilt)
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -66,8 +67,16 @@ dependencies {
     implementation libs.dagger.hilt.android
     implementation libs.navigation.compose
     implementation libs.navigation.hilt
+    implementation libs.androidx.camera.view
+    implementation libs.androidx.camera.lifecycle
     kapt libs.hilt.kapt
     implementation libs.androidx.lifecycle
+    implementation libs.google.accompanist
+    implementation libs.androidx.camera.camera2
+    implementation libs.androidx.camera.core
+    implementation libs.androidx.camera.extensions
+    implementation libs.firebase.storage.ktx
+    implementation libs.arrow.kt
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

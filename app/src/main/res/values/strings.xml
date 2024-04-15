@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LoginStoriEHR</string>
+    <string name="connectivity_error">Parece tener un error con su internet, por favor verifique su conexión</string>
+    <string name="unknow_error">Ocurrio un error desconocido</string>
 </resources>

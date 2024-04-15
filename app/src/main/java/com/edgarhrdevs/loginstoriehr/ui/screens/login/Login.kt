@@ -1,5 +1,7 @@
 package com.edgarhrdevs.loginstoriehr.ui.screens.login
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +17,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -22,6 +25,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +34,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,13 +48,29 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.edgarhrdevs.loginstoriehr.R
+import com.edgarhrdevs.loginstoriehr.domain.AppError
 import com.edgarhrdevs.loginstoriehr.ui.navigation.Destinations
+import com.edgarhrdevs.loginstoriehr.ui.screens.ErrorScreen
+import com.edgarhrdevs.loginstoriehr.ui.screens.LoadingScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Login(navController: NavController, viewModel: LoginViewModel = hiltViewModel()) {
-    val uiState = viewModel.uiState
+    val uiState by viewModel.uiState.collectAsState()
+    val activity = (LocalContext.current as? Activity)
+
+
+    if(uiState.navigateTo){
+        navController.navigate(Destinations.HOME)
+    }
+
+    BackHandler {
+        activity?.finish()
+    }
+
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = {
@@ -63,36 +85,49 @@ fun Login(navController: NavController, viewModel: LoginViewModel = hiltViewMode
             })
         }
     ) { padding ->
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            GenericTextField(
-                textParam = uiState.email,
-                label = "Email",
-                setValue = { viewModel.setEmail(it) },
-                icon = Icons.Filled.Email,
-                contentDescription = "Login Email Icon ",
-                keyboardType = KeyboardType.Email,
-                visualTransformation = VisualTransformation.None
-            )
-            GenericTextField(
-                textParam = uiState.password,
-                label = "Contraseña",
-                setValue = { viewModel.setPassword(it) },
-                icon = Icons.Filled.Lock,
-                contentDescription = "Login Password Icon",
-                keyboardType = KeyboardType.Password,
-                visualTransformation = PasswordVisualTransformation()
-            )
-            GenericButton(action = { }, label = "Iniciar sesión")
-            RegisterUserText() {
-                navController.navigate(Destinations.REGISTER)
+
+        when(uiState.isLoading){
+            true -> { LoadingScreen() }
+            false -> {
+                when(uiState.error){
+                    AppError.Connectivity -> { ErrorScreen(text = stringResource(R.string.connectivity_error), padding = padding){ viewModel.resetScreen() } }
+                    is AppError.Unknown -> { ErrorScreen(text = (uiState.error as AppError.Unknown).message, padding = padding){ viewModel.resetScreen() } }
+                    null -> {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(padding)
+                        ) {
+                            GenericTextField(
+                                textParam = uiState.email,
+                                label = "Email",
+                                setValue = { viewModel.setEmail(it) },
+                                icon = Icons.Filled.Email,
+                                contentDescription = "Login Email Icon ",
+                                keyboardType = KeyboardType.Email,
+                                visualTransformation = VisualTransformation.None
+                            )
+                            GenericTextField(
+                                textParam = uiState.password,
+                                label = "Contraseña",
+                                setValue = { viewModel.setPassword(it) },
+                                icon = Icons.Filled.Lock,
+                                contentDescription = "Login Password Icon",
+                                keyboardType = KeyboardType.Password,
+                                visualTransformation = PasswordVisualTransformation()
+                            )
+                            GenericButton(action = { viewModel.login() }, label = "Iniciar sesión")
+                            RegisterUserText() {
+                                navController.navigate(Destinations.REGISTER)
+                            }
+                        }
+                    }
+                }
             }
         }
+
     }
 
 
